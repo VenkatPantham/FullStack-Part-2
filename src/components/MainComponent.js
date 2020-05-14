@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { actions } from "react-redux-form";
 import Header from "./HeaderComponent";
 import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
@@ -25,6 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
+  resetFeedbackForm: () => {
+    dispatch(actions.reset("feedback"));
+  },
 });
 
 class Main extends Component {
@@ -33,12 +37,7 @@ class Main extends Component {
   }
 
   render() {
-    const MenuPage = () => {
-      return <Menu dishes={this.props.dishes} />;
-    };
-
     const HomePage = () => {
-      console.log(this.props.dishes);
       return (
         <Home
           dishesLoading={this.props.dishes.isLoading}
@@ -50,8 +49,11 @@ class Main extends Component {
       );
     };
 
+    const MenuPage = () => {
+      return <Menu dishes={this.props.dishes} />;
+    };
+
     const DishWithId = ({ match }) => {
-      console.log(this.props.dishes);
       return (
         <DishDetail
           dish={
@@ -73,6 +75,10 @@ class Main extends Component {
       return <About leaders={this.props.leaders} />;
     };
 
+    const ContactPage = () => {
+      return <Contact resetFeedbackForm={this.props.resetFeedbackForm} />;
+    };
+
     return (
       <div>
         <Header />
@@ -81,7 +87,7 @@ class Main extends Component {
           <Route exact path="/menu" component={MenuPage} />
           <Route path="/menu/:dishId" component={DishWithId} />
           <Route exact path="/aboutus" component={AboutPage} />
-          <Route exact path="/contactus" component={Contact} />} />
+          <Route exact path="/contactus" component={ContactPage} />} />
           <Redirect to="/home" />
         </Switch>
         <Footer />
