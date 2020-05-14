@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
+import Loader from "./LoadingComponent";
 
 function RenderDish({ dish }) {
   return (
@@ -79,7 +80,12 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(this.props.dishId,values.rating,values.yourname,values.comment);
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.yourname,
+      values.comment
+    );
   }
 
   render() {
@@ -172,7 +178,23 @@ class CommentForm extends Component {
 }
 
 const DishDetail = (props) => {
-  if (props.dish != null) {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loader />
+        </div>
+      </div>
+    );
+  } else if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
+      </div>
+    );
+  } else if (props.dish != null) {
     return (
       <div className="container">
         <div className="row">
