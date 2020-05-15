@@ -1,6 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 
-const Dishes = (
+export const Dishes = (
   state = {
     isLoading: true,
     errMess: null,
@@ -29,5 +29,3 @@ const Dishes = (
       return state;
   }
 };
-
-export default Dishes;
