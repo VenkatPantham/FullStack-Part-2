@@ -44,8 +44,8 @@ function RenderComments({ comments, dishId, postComment }) {
   if (comments != null) {
     const Comments = comments.map((comment) => {
       return (
-        <Fade in>
-          <li key={comment.id} className="col-12">
+        <Fade in key={comment.id}>
+          <li className="col-12">
             <p>{comment.comment}</p>
             <p>
               -- {comment.author},&nbsp;
